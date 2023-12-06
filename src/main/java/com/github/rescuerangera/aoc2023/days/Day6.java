@@ -1,6 +1,7 @@
 package com.github.rescuerangera.aoc2023.days;
 
 import com.github.rescuerangera.aoc2023.Day;
+import com.github.rescuerangera.aoc2023.Interval;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -35,27 +36,15 @@ public class Day6 extends Day {
     }
 
 
-    private long[] calculateInterval(Race race) {
+    private Interval calculateInterval(Race race) {
         double sqrt = Math.sqrt(race.time * race.time - 4 * race.distance);
-        double root1 = ((double) race.time + sqrt) / 2;
-        double root2 = ((double) race.time - sqrt) / 2;
+        double rootLeft = ((double) race.time - sqrt) / 2;
+        double rootRight = ((double) race.time + sqrt) / 2;
 
-        long r2;
-        if (root2 % 1 != 0) {
-            r2 = (long) Math.ceil(root2);
-        } else {
-            r2 = (long) root2 + 1;
-        }
+        long left = rootLeft % 1 != 0 ? (long) Math.ceil(rootLeft) : (long) rootLeft + 1;
+        long right = rootRight % 1 != 0 ? (long) Math.ceil(rootRight) : (long) rootRight; // not inclusive
 
-        long r1;
-        if (root1 % 1 != 0) {
-            r1 = (long) Math.floor(root1);
-        } else {
-            r1 = (long) root1 - 1;
-        }
-
-
-        return new long[]{r2, r1};
+        return new Interval(left, right);
     }
 
     @Override
@@ -71,7 +60,7 @@ public class Day6 extends Day {
         return races
                 .stream()
                 .map(this::calculateInterval)
-                .map(i -> i[1] - i[0] + 1)
+                .map(Interval::getLength)
                 .reduce(1L, (product, value) -> product * value)
                 .toString();
     }
@@ -112,7 +101,7 @@ public class Day6 extends Day {
         return Stream.of(race)
                 .filter(Objects::nonNull)
                 .map(this::calculateInterval)
-                .map(i -> i[1] - i[0] + 1)
+                .map(Interval::getLength)
                 .reduce(1L, (product, value) -> product * value)
                 .toString();
     }

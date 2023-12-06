@@ -22,6 +22,10 @@ public class Interval implements Comparable<Interval> {
         return end;
     }
 
+    public long getLength() {
+        return end - start;
+    }
+
     @Override
     public int compareTo(Interval other) {
         return Comparator
