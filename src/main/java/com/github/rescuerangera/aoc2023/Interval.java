@@ -33,4 +33,31 @@ public class Interval implements Comparable<Interval> {
                 .thenComparingLong(Interval::getEnd)
                 .compare(this, other);
     }
+
+    public static Interval intersection(Interval a, Interval b) {
+        Interval left;
+        Interval right;
+
+        int compare = a.compareTo(b);
+
+        if ( compare > 0 ) {
+            left = b;
+            right = a;
+        } else if (compare < 0) {
+            left = a;
+            right = b;
+        } else {
+            return a;
+        }
+
+        if ( left.getEnd() < right.getStart() ) {
+            return null;
+        }
+
+        if ( right.getEnd() <= left.getEnd() ) {
+            return right;
+        } else {
+            return new Interval(right.getStart(), left.getEnd());
+        }
+    }
 }
