@@ -2,6 +2,7 @@ package com.github.rescuerangera.aoc2023;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
+import java.util.Arrays;
 import java.util.function.Consumer;
 
 public class Utils {
@@ -42,5 +43,9 @@ public class Utils {
      */
     public static long lcm(long a, long b) {
         return a / gcd(a, b) * b;
+    }
+
+    public static long lcm(long[] input) {
+        return Arrays.stream(input).reduce(1L, Utils::lcm);
     }
 }
