@@ -4,6 +4,6 @@ import com.github.rescuerangera.aoc2023.days.*;
 
 public class Main {
     public static void main(String[] args) {
-        (new Day21()).solve().beautifulPrint();
+        (new Day22()).solve().beautifulPrint();
     }
 }
